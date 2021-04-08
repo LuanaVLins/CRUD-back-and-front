@@ -14,7 +14,7 @@ app.post("/produto", (request, response) => {
         let produto = request.body;
 
         let novoProduto = {
-            id: produto.id,
+            id: Math.random(),
             nome: produto.nome,
             quantidade: produto.quantidade,
             valor: produto.valor,

@@ -54,7 +54,7 @@
 
     </b-form>
 
-    <b-table :fields="colunas" striped hover :items="Produtos">
+    <b-table :fields="colunas" striped hover :items="produtos">
 
       <template #cell(opcoes)="data">
         <b-button type="button" variant="outline-primary" @click="editar(data.item)">Editar</b-button>
@@ -70,7 +70,7 @@
 
 <script>
 
-import produto from './services/produtos'
+import Produto from './services/produtos'
 
 export default {
   name: 'App',
@@ -87,9 +87,10 @@ export default {
           // A column that needs custom formatting
           { key: 'nome', label: 'Nome ' },
           // A regular column
-          'Quantidade',
+          { key: 'quantidade', label: 'Quantidade'},
           // A regular column
           { key: 'valor', label: 'Valor'},
+          { key: 'opcoes', label: 'Opcoes'},
           
       ],
       produto: {
@@ -111,7 +112,7 @@ export default {
       
       if(!this.produto.id){
 
-        produto.salvar(this.produto).then(()=>{
+        Produto.salvar(this.produto).then(()=>{
           this.produto = {}
           this.listar()
           alert('Salvo com sucesso!')
@@ -121,7 +122,7 @@ export default {
 
       }else{
 
-        produto.atualizar(this.produto).then(()=>{
+        Produto.atualizar(this.produto).then(()=>{
           this.produto = {}
           this.listar()
           alert('Atualizado com sucesso!')
@@ -134,7 +135,7 @@ export default {
     },
     listar(){
 
-      produto.listar().then((resposta)=>{
+      Produto.listar().then((resposta)=>{
         this.produtos = resposta.data
       }).catch(e => {
           console.log(e)
@@ -153,7 +154,7 @@ export default {
 
       if(confirm(`Deseja realmente excluir ${produto.nome}?`)){
 
-         produto.remover(produto).then(()=> {
+         Produto.remover(produto).then(()=> {
             this.listar()
         }).catch(e => {
             console.log(e)
